@@ -10,9 +10,12 @@ echo "GoodbyeDPI-Turkey ayarları (Superonline, TurkTelekom vb. için)"
 echo "ile uyumlu çalışacak şekilde tasarlanmıştır."
 echo ""
 
+# Bulunulan dizini dinamik olarak al
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [ "$EUID" -ne 0 ]; then
   echo "LÜTFEN DİKKAT: tpws şeffaf modda çalışabilmek için root yetkilerine ihtiyaç duyar."
-  echo "Lütfen script'i 'sudo' ile çalıştırın: sudo ./macos_turkey_config.sh"
+  echo "Lütfen script'i 'sudo' ile çalıştırın: sudo $DIR/macos_turkey_config.sh"
   exit 1
 fi
 
@@ -27,15 +30,15 @@ case $choice in
     1)
         echo "Başlatılıyor: Varsayılan Ayar (Split at 2 + OOB)..."
         # GoodbyeDPI -5 equivalent: fragment at 2, wrong-seq/chksum replaced with OOB to bypass DPI state
-        /opt/zapret/tpws/tpws --user=root --port=988 --bind-addr=127.0.0.1 --split-http-req=method --split-tls=sni --split-pos=2 --oob
+        "$DIR"/tpws/tpws --user=root --port=988 --bind-addr=127.0.0.1 --split-http-req=method --split-tls=sni --split-pos=2 --oob
         ;;
     2)
         echo "Başlatılıyor: Alternatif 2 (Disorder)..."
-        /opt/zapret/tpws/tpws --user=root --port=988 --bind-addr=127.0.0.1 --split-http-req=method --split-tls=sni --split-pos=2 --disorder
+        "$DIR"/tpws/tpws --user=root --port=988 --bind-addr=127.0.0.1 --split-http-req=method --split-tls=sni --split-pos=2 --disorder
         ;;
     3)
         echo "Başlatılıyor: Alternatif 3 (TLS Pad)..."
-        /opt/zapret/tpws/tpws --user=root --port=988 --bind-addr=127.0.0.1 --split-tls=sni --tlsrec=sni
+        "$DIR"/tpws/tpws --user=root --port=988 --bind-addr=127.0.0.1 --split-tls=sni --tlsrec=sni
         ;;
     4)
         echo "Çıkış yapılıyor."
