@@ -9,12 +9,23 @@ Windows kullananlar [GoodbyeDPI-Turkey](https://github.com/cagritaskn/GoodbyeDPI
 - Güvenilir bir DNS kullanmalısınız (Tavsiye edilen: Yandex DNS - 77.88.8.8 / 77.88.8.1 veya Cloudflare DNS - 1.1.1.1 / 1.0.0.1). macOS Sistem Ayarları -> Ağ -> Wi-Fi -> Ayrıntılar -> DNS sekmesinden DNS adreslerinizi değiştirebilirsiniz. Veya tarayıcınızdan "DNS over HTTPS (DoH)" özelliğini açabilirsiniz.
 - Terminal kullanımına aşina olmalısınız.
 
-## Kurulum ve Kullanım
+## Tek Komutla Kurulum (Önerilen)
+
+Zapret-TR'yi macOS üzerinde hızlıca kurmak için terminalinize şu komutu yapıştırın:
+```bash
+curl -fsSL https://raw.githubusercontent.com/Hajorda/zapret-tr/master/install.sh | sudo bash
+```
+Programı bilgisayarınızdan kaldırmak isterseniz şu komutu kullanabilirsiniz:
+```bash
+curl -fsSL https://raw.githubusercontent.com/Hajorda/zapret-tr/master/uninstall.sh | sudo bash
+```
+
+## Manuel Kurulum ve Kullanım
 
 1. Terminal'i açın ve projeyi bilgisayarınıza indirin (ya da indirdiğiniz ZIP dosyasını klasöre çıkartın):
    ```bash
-   git clone https://github.com/bol-van/zapret.git
-   cd zapret
+   git clone https://github.com/Hajorda/zapret-tr.git
+   cd zapret-tr
    ```
 
 2. Mac'inizde `tpws` programını derlemek için gerekli araçları yükleyin ve derleyin:
