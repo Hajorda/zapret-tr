@@ -71,6 +71,37 @@ echo ""
 # Seçim istemini renklendir
 read -p "$(echo -e ${CYAN}"Seçiminiz (1/2/3/4): "${NC})" choice
 
+if [ "$choice" == "4" ]; then
+    echo -e "${YELLOW}Çıkış yapılıyor. İyi günler!${NC}"
+    exit 0
+fi
+
+if [[ "$choice" != "1" && "$choice" != "2" && "$choice" != "3" ]]; then
+    echo -e "${RED}[HATA] Geçersiz seçim! Lütfen menüden 1, 2, 3 veya 4 seçin.${NC}"
+    exit 1
+fi
+
+echo ""
+echo -e "${YELLOW}[+] Yönlendirme (PF) kuralları uygulanıyor...${NC}"
+cat << 'PFRULES' > /tmp/zapret_pf.conf
+rdr pass on lo0 inet  proto tcp from !127.0.0.0/8 to any port {80,443} -> 127.0.0.1 port 988
+rdr pass on lo0 inet6 proto tcp from !::1 to any port {80,443} -> fe80::1 port 988
+pass out route-to (lo0 127.0.0.1) inet proto tcp from any to any port {80,443} user { >root }
+PFRULES
+
+# PF Kurallarını yükle
+sudo pfctl -ef /tmp/zapret_pf.conf &>/dev/null
+
+# Kapanışta kuralları temizle
+trap 'echo -e "\n${RED}[!] Program durduruldu. Bağlantı kuralları temizleniyor...${NC}"; sudo pfctl -F all -f /etc/pf.conf &>/dev/null; exit 0' SIGINT SIGTERM
+
+echo -e "${GREEN}[+] Güvenlik duvarı (PF) aktif edildi!${NC}"
+echo -e "${CYAN}-------------------------------------------------------------"
+echo -e "[BİLGİ] Bu terminal penceresi AÇIK KALDIĞI SÜRECE yasaklı sitelere girebilirsiniz."
+echo -e "[BİLGİ] Kapatmak ve internetinizi normale döndürmek için CTRL+C tuşlarına basın."
+echo -e "-------------------------------------------------------------${NC}"
+echo ""
+
 case $choice in
     1)
         echo -e "${GREEN}[+] Başlatılıyor: Varsayılan Ayar (Split at 2 + OOB)...${NC}"
@@ -83,13 +114,5 @@ case $choice in
     3)
         echo -e "${GREEN}[+] Başlatılıyor: Alternatif 3 (TLS Pad)...${NC}"
         "$TPWS_EXEC" --user=root --port=988 --bind-addr=127.0.0.1 --split-tls=sni --tlsrec=sni
-        ;;
-    4)
-        echo -e "${YELLOW}Çıkış yapılıyor. İyi günler!${NC}"
-        exit 0
-        ;;
-    *)
-        echo -e "${RED}[HATA] Geçersiz seçim! Lütfen menüden 1, 2, 3 veya 4 seçin.${NC}"
-        exit 1
         ;;
 esac
