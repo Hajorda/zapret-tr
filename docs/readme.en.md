@@ -13,6 +13,7 @@ Current version is [zapret2](https://github.com/bol-van/zapret2).
 ___
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/bol-van/zapret/tree/master/docs/readme.en.md)
 [![ru](https://img.shields.io/badge/lang-ru-green.svg)](https://github.com/bol-van/zapret/tree/master/docs/readme.md)
+[![tr](https://img.shields.io/badge/lang-tr-blue.svg)](https://github.com/bol-van/zapret/tree/master/docs/readme.tr.md)
 
 ***
 

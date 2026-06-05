@@ -14,6 +14,7 @@ zapret является свободным и open source.
 
 [![en](https://img.shields.io/badge/lang-en-red.svg)](./readme.en.md)
 [![ru](https://img.shields.io/badge/lang-ru-green.svg)](./readme.md)
+[![tr](https://img.shields.io/badge/lang-tr-blue.svg)](./readme.tr.md)
 
 ***
 
