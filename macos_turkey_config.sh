@@ -4,7 +4,7 @@ echo "=========================================================="
 echo " Zapret macOS Configurator (GoodbyeDPI-Turkey Alternative)"
 echo "=========================================================="
 echo ""
-echo "Bu betik, macOS sistemlerde Türkiye'deki DPI (Derin Paket İnceleme)"
+echo "Bu script, macOS sistemlerde Türkiye'deki DPI (Derin Paket İnceleme)"
 echo "engellemelerini aşmak için 'tpws' aracını yapılandırır."
 echo "GoodbyeDPI-Turkey ayarları (Superonline, TurkTelekom vb. için)"
 echo "ile uyumlu çalışacak şekilde tasarlanmıştır."
@@ -12,7 +12,7 @@ echo ""
 
 if [ "$EUID" -ne 0 ]; then
   echo "LÜTFEN DİKKAT: tpws şeffaf modda çalışabilmek için root yetkilerine ihtiyaç duyar."
-  echo "Lütfen betiği 'sudo' ile çalıştırın: sudo ./macos_turkey_config.sh"
+  echo "Lütfen script'i 'sudo' ile çalıştırın: sudo ./macos_turkey_config.sh"
   exit 1
 fi
 

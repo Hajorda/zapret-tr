@@ -22,15 +22,15 @@ Windows kullananlar [GoodbyeDPI-Turkey](https://github.com/cagritaskn/GoodbyeDPI
    make mac
    ```
 
-3. Kurulum tamamlandıktan sonra, macOS güvenlik duvarı (PF) kurallarını ayarlamanız ve `tpws` aracını çalıştırmanız gerekir. Proje ana dizininde bulunan ve Türkiye için özel olarak hazırladığımız betiği kullanabilirsiniz:
+3. Kurulum tamamlandıktan sonra, macOS güvenlik duvarı (PF) kurallarını ayarlamanız ve `tpws` aracını çalıştırmanız gerekir. Proje ana dizininde bulunan ve Türkiye için özel olarak hazırladığımız script'i kullanabilirsiniz:
    ```bash
    sudo ./macos_turkey_config.sh
    ```
    *Not: tpws, trafiği manipüle edebilmek için root haklarına (sudo) ihtiyaç duyar.*
 
-## Alternatif Yöntemler (Betiği Kullanmak İstemeyenler İçin)
+## Alternatif Yöntemler (Script'i Kullanmak İstemeyenler İçin)
 
-Eğer betiği kullanmak istemiyorsanız veya PF yönlendirmelerini kendiniz yapmak istiyorsanız, öncelikle Terminal'de aşağıdaki pf komutlarıyla 80 ve 443 portlarını `tpws`'nin dinlediği porta (örn. 988) yönlendirmeniz gerekir:
+Eğer script'i kullanmak istemiyorsanız veya PF yönlendirmelerini kendiniz yapmak istiyorsanız, öncelikle Terminal'de aşağıdaki pf komutlarıyla 80 ve 443 portlarını `tpws`'nin dinlediği porta (örn. 988) yönlendirmeniz gerekir:
 
 `/etc/pf.conf` dosyanızın uygun yerine aşağıdaki kuralları ekleyin (veya geçici olarak yükleyin):
 ```pf
@@ -57,7 +57,7 @@ sudo /opt/zapret/tpws/tpws --user=root --port=988 --bind-addr=127.0.0.1 --split-
 
 ## Sık Karşılaşılan Sorunlar
 
-- **Discord'a giremiyorum / siteler yavaş:** Betik içerisindeki Alternatif 2 veya Alternatif 3'ü deneyin. `tpws` aracının TCP seviyesindeki parçalama özellikleri ISS'den ISS'ye farklılık gösterebilir.
+- **Discord'a giremiyorum / siteler yavaş:** Script içerisindeki Alternatif 2 veya Alternatif 3'ü deneyin. `tpws` aracının TCP seviyesindeki parçalama özellikleri ISS'den ISS'ye farklılık gösterebilir.
 - **İnternet bağlantım tamamen koptu:** Terminal penceresini kapatarak (veya `Ctrl+C` ile) `tpws` uygulamasını durdurun ve ardından PF (Packet Filter) kurallarını sıfırlayın: `sudo pfctl -F all -f /etc/pf.conf`.
 
 ---
