@@ -21,6 +21,9 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 if [ -d "$INSTALL_DIR" ]; then
+    echo -e "${YELLOW}macOS Güvenlik Duvarı (PF) orijinal ayarlarına sıfırlanıyor...${NC}"
+    sudo pfctl -F all -f /etc/pf.conf &>/dev/null
+    
     echo -e "${YELLOW}Zapret-TR dosyaları siliniyor ($INSTALL_DIR)...${NC}"
     rm -rf "$INSTALL_DIR"
     echo -e "${GREEN}Kaldırma işlemi başarıyla tamamlandı!${NC}"
