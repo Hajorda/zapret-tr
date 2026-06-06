@@ -81,24 +81,24 @@ if [[ "$choice" != "1" && "$choice" != "2" && "$choice" != "3" ]]; then
     exit 1
 fi
 
-echo ""
-echo -e "${YELLOW}[+] Yönlendirme (PF) kuralları uygulanıyor...${NC}"
-cat << 'PFRULES' > /tmp/zapret_pf.conf
-rdr pass on lo0 inet  proto tcp from !127.0.0.0/8 to any port {80,443} -> 127.0.0.1 port 988
-rdr pass on lo0 inet6 proto tcp from !::1 to any port {80,443} -> fe80::1 port 988
-pass out route-to (lo0 127.0.0.1) inet proto tcp from any to any port {80,443} user { >root }
-PFRULES
-
-# PF Kurallarını yükle
-sudo pfctl -ef /tmp/zapret_pf.conf &>/dev/null
-
-# Kapanışta kuralları temizle
-trap 'echo -e "\n${RED}[!] Program durduruldu. Bağlantı kuralları temizleniyor...${NC}"; sudo pfctl -F all -f /etc/pf.conf &>/dev/null; exit 0' SIGINT SIGTERM
-
-echo -e "${GREEN}[+] Güvenlik duvarı (PF) aktif edildi!${NC}"
+echo -e "${YELLOW}[+] Güvenlik Duvarı (PF) Yönlendirmesi Gerekli!${NC}"
+echo -e "Şeffaf (transparent) modun çalışabilmesi için macOS güvenlik duvarına (PF) aşağıdaki kuralların eklenmesi gerekmektedir."
+echo -e "Lütfen ayrı bir terminal açarak şu komutları sırasıyla çalıştırın:\n"
+echo -e "${CYAN}  1) Kuralları geçici bir dosyaya yazın:${NC}"
+echo -e "  cat << 'EOF' > /tmp/zapret_pf.conf"
+echo -e "  rdr pass on lo0 inet  proto tcp from \!127.0.0.0/8 to any port {80,443} -> 127.0.0.1 port 988"
+echo -e "  rdr pass on lo0 inet6 proto tcp from \!::1 to any port {80,443} -> fe80::1 port 988"
+echo -e "  pass out route-to (lo0 127.0.0.1) inet proto tcp from any to any port {80,443} user { >root }"
+echo -e "  EOF\n"
+echo -e "${CYAN}  2) Kuralları test edin (Hata vermemeli):${NC}"
+echo -e "  pfctl -vnf /tmp/zapret_pf.conf\n"
+echo -e "${CYAN}  3) Kuralları uygulayın (İnternetiniz yavaşlayabilir/kesilebilir, iptal için pfctl -F all -f /etc/pf.conf):${NC}"
+echo -e "  sudo pfctl -ef /tmp/zapret_pf.conf\n"
+echo -e "${RED}[ÖNEMLİ] İnternetiniz tamamen giderse, macOS varsayılan güvenlik duvarını geri yüklemek için:${NC}"
+echo -e "  sudo pfctl -F all -f /etc/pf.conf\n"
 echo -e "${CYAN}-------------------------------------------------------------"
-echo -e "[BİLGİ] Bu terminal penceresi AÇIK KALDIĞI SÜRECE yasaklı sitelere girebilirsiniz."
-echo -e "[BİLGİ] Kapatmak ve internetinizi normale döndürmek için CTRL+C tuşlarına basın."
+echo -e "[BİLGİ] Aşağıdaki araç ÇALIŞTIĞI SÜRECE yasaklı sitelere girebilirsiniz."
+echo -e "[BİLGİ] Kapatmak için CTRL+C tuşlarına basın."
 echo -e "-------------------------------------------------------------${NC}"
 echo ""
 
